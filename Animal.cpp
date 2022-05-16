@@ -1,18 +1,9 @@
 #include "Animal.h"
 
-void Animal::AddFriend(Animal other) {
-    if (this->name_ != other.name_) {
-        bool exist = false;
-        for(const auto& i : friends_) {
-            if (i.name_ == other.name_) {
-                exist = true;
-                break;
-            }
-        }
-        if (!exist) {
-            friends_.push_back(other);
-            other.friends_.push_back(*this);
-        }
+void Animal::AddFriend(IAnimal* other) {
+    if (this != other) {
+        friends_.push_back(other);
+        dynamic_cast<Animal*>(other)->friends_.push_back(this);
     }
 }
 
@@ -20,12 +11,8 @@ std::string Animal::GetName() {
     return name_;
 }
 
-std::vector<std::string> Animal::GetFriends() {
-    std::vector<std::string> friends;
-    for(auto i : friends_) {
-        friends.push_back(i.GetName());
-    }
-    return friends;
+std::vector<IAnimal *> Animal::GetFriends() {
+    return friends_;
 }
 
 std::string Animal::Type() {

@@ -9,7 +9,7 @@ int main() {
     Eagle eagle("asdd");
     std::cout << eagle.Type() << '\n';
 
-    eagle.AddFriend(animal);
+    eagle.AddFriend(static_cast<IAnimal*>(&animal));
 
     for(auto i : eagle.GetFriends()) {
         std::cout << i << ' ';
